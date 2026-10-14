@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+/* Design tokens - defined once, used everywhere. */
+/* Luxury theme: royal blue and metallic gold on an ivory-white page. Every text pairing meets WCAG AA (4.5:1);
+   bright gold (#d4af37) is for borders, rules and icons on dark blue only - on white, text uses --gold-strong. */
+:root {
+  /* Night mode follows the device, or the System / Light / Dark switch in the sidebar. */
+  color-scheme: light;
+  --background: #f8f7f3;
+  --surface: #ffffff;
+  --surface-muted: #f4f2ec;
+  --hover: #f7f4ea;
+  --foreground: #0f1b3d;
+  --muted: #5a6276;
+  --border: #e7e3d8;
+  --border-strong: #d6cfbd;
+  --navy: #0a1f5c;
+  --navy-2: #1d3fae;
+  --navy-3: #13307f;
+  --navy-foreground: #dfe6f8;
+  --navy-muted: #c8d3ef;
+  --gold: #d4af37;
+  --gold-light: #f0d78c;
+  --gold-strong: #86671a;
+  --gold-soft: #faf3de;
+  --gold-text: #e9d39a;
+  --primary: #1d3fae;
+  --primary-foreground: #ffffff;
+  --success: #11643c;
+  --success-soft: #e3f5ea;
+  --warning: #8a4b06;
+  --warning-soft: #fff1dc;
+  --danger: #a3242b;
+  --danger-soft: #fde7e8;
+  --badge: #c62828;
+  --info: #1d3fae;
+  --info-soft: #ebf0ff;
+  --ring: #1d3fae;
+  --radius: 20px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow: 0 1px 2px rgb(15 27 61 / 0.04), 0 14px 34px -22px rgb(15 27 61 / 0.3);
+  --shadow-lift: 0 2px 4px rgb(15 27 61 / 0.05), 0 22px 44px -24px rgb(29 63 174 / 0.42);
+  /* Ten tones for stat boxes and report modules (text-safe on white; lighter versions in dark mode). */
+  --tone-royal: #1d3fae;
+  --tone-teal: #0f766e;
+  --tone-rust: #9a3412;
+  --tone-violet: #6d28d9;
+  --tone-amber: #a16207;
+  --tone-sky: #0369a1;
+  --tone-green: #15803d;
+  --tone-rose: #be185d;
+  --tone-red: #b91c1c;
+  --tone-slate: #475569;
+}
+
+/* Night mode: deep royal canvas, gold accents kept. Screen only, so printing and PDFs stay light. */
+@media screen {
+  :root[data-theme="dark"] { 
+    color-scheme: dark;
+    --background: #0b1226; --surface: #111a33; --surface-muted: #18233f; --hover: #1b2848;
+    --foreground: #eaeefa; --muted: #a6b0c6; --border: #233256; --border-strong: #33467a;
+    --gold-soft: #2b2412; --gold-strong: #e0c27f; --gold-text: #e9d39a;
+    --primary: #2a52c9; --primary-foreground: #ffffff; --ring: #e0c27f;
+    --success: #6fd39b; --success-soft: #11301f; --warning: #f2b45c; --warning-soft: #33240d;
+    --danger: #f39195; --danger-soft: #3a1619; --info: #9db7f0; --info-soft: #18233f;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 34px -22px rgb(0 0 0 / 0.8);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 22px 44px -22px rgb(0 0 0 / 0.9);
+    --tone-royal: #93b2ec; --tone-teal: #4fd1c5; --tone-rust: #fb9a6e; --tone-violet: #bba6ff; --tone-amber: #f2c35a;
+    --tone-sky: #67c6f5; --tone-green: #6fdf9c; --tone-rose: #f590c2; --tone-red: #ff8f8f; --tone-slate: #b6c2d6;
+   }
+}
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { 
+    color-scheme: dark;
+    --background: #0b1226; --surface: #111a33; --surface-muted: #18233f; --hover: #1b2848;
+    --foreground: #eaeefa; --muted: #a6b0c6; --border: #233256; --border-strong: #33467a;
+    --gold-soft: #2b2412; --gold-strong: #e0c27f; --gold-text: #e9d39a;
+    --primary: #2a52c9; --primary-foreground: #ffffff; --ring: #e0c27f;
+    --success: #6fd39b; --success-soft: #11301f; --warning: #f2b45c; --warning-soft: #33240d;
+    --danger: #f39195; --danger-soft: #3a1619; --info: #9db7f0; --info-soft: #18233f;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 34px -22px rgb(0 0 0 / 0.8);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 22px 44px -22px rgb(0 0 0 / 0.9);
+    --tone-royal: #93b2ec; --tone-teal: #4fd1c5; --tone-rust: #fb9a6e; --tone-violet: #bba6ff; --tone-amber: #f2c35a;
+    --tone-sky: #67c6f5; --tone-green: #6fdf9c; --tone-rose: #f590c2; --tone-red: #ff8f8f; --tone-slate: #b6c2d6;
+   }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-hover: var(--hover);
+  --color-border-strong: var(--border-strong);
+  --color-navy-3: var(--navy-3);
+  --color-gold-light: var(--gold-light);
+  --color-gold-text: var(--gold-text);
+  --color-badge: var(--badge);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-navy-muted: var(--navy-muted);
+  --color-gold: var(--gold);
+  --color-gold-strong: var(--gold-strong);
+  --color-gold-soft: var(--gold-soft);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --radius-card: var(--radius);
+}
+
+html { scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+
+::selection { background: var(--gold-soft); color: var(--foreground); }
+
+/* Royal blue menu and dashboard hero, with a gold hairline. */
+.bg-rail {
+  background: radial-gradient(120% 60% at 0% 0%, rgb(212 175 55 / 0.12) 0%, rgb(212 175 55 / 0) 50%), linear-gradient(180deg, #081a4a 0%, #0d2566 55%, #13307f 100%);
+  box-shadow: inset -1px 0 0 rgb(212 175 55 / 0.22);
+}
+.bg-hero {
+  background: radial-gradient(90% 120% at 100% 0%, rgb(212 175 55 / 0.3) 0%, rgb(212 175 55 / 0) 45%), linear-gradient(135deg, #081a4a 0%, #13307f 55%, #1d3fae 100%);
+  border: 1px solid rgb(212 175 55 / 0.35); box-shadow: 0 28px 50px -30px rgb(8 26 74 / 0.8);
+}
+.bg-hero::after { content: ""; position: absolute; right: -60px; bottom: -90px; width: 260px; height: 260px; border-radius: 50%; border: 36px solid rgb(212 175 55 / 0.09); pointer-events: none; }
+.gold-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold-light) 50%, var(--gold) 80%, transparent); }
+.text-gold-shine { background: linear-gradient(100deg, #c99a2e 0%, #f0d78c 45%, #d4af37 70%, #b8892a 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Buttons: soft lift on hover, press on click. */
+.btn-primary-grad { background: linear-gradient(180deg, #2a52c9 0%, #1d3fae 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), 0 8px 18px -12px rgb(29 63 174 / 0.9); }
+.btn-primary-grad:hover { background: linear-gradient(180deg, #2449b8 0%, #17359a 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), 0 14px 26px -14px rgb(29 63 174 / 0.95); }
+.btn-gold-grad { background: linear-gradient(180deg, #ecd081 0%, #d4af37 100%); color: #0f1b3d; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.5), 0 8px 18px -12px rgb(160 120 30 / 0.9); }
+.btn-gold-grad:hover { background: linear-gradient(180deg, #e6c56c 0%, #c9a22c 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.5), 0 14px 26px -14px rgb(160 120 30 / 0.95); }
+@media (hover: hover) {
+  .btn-primary-grad:hover, .btn-gold-grad:hover { transform: translateY(-1px); }
+  .card-hover { transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease); }
+  .card-hover:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: color-mix(in srgb, var(--gold) 55%, var(--border)); }
+}
+.nav-active { background: linear-gradient(90deg, rgb(212 175 55 / 0.24), rgb(212 175 55 / 0.05)); box-shadow: inset 3px 0 0 var(--gold); }
+.logo-ring { box-shadow: 0 0 0 2px rgb(212 175 55 / 0.65), 0 8px 18px -10px rgb(0 0 0 / 0.6); }
+th { letter-spacing: 0.12em; }
+
+a, button, summary, [role="button"] { transition: color 0.2s var(--ease), background-color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease), opacity 0.2s var(--ease); }
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+/* On royal blue (menu, hero, mobile header) the focus ring turns gold so it stays visible. */
+.bg-rail :focus-visible, .bg-hero :focus-visible { outline-color: var(--gold-light); }
+
+.skip-link { position: fixed; left: 1rem; top: -4rem; z-index: 100; padding: 0.75rem 1rem; border-radius: 0.75rem; background: var(--navy); color: #fff; font-weight: 700; box-shadow: 0 0 0 2px var(--gold); }
+.skip-link:focus { top: 1rem; }
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Wide tables scroll inside their card on phones instead of stretching the page. */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+
+@media print { .bg-hero { background: none; border: 0; box-shadow: none; color: var(--foreground); } }
+
+@keyframes shimmer { 0% { opacity: 1 } 50% { opacity: 0.55 } 100% { opacity: 1 } }
+.skeleton { background: var(--surface-muted); border-radius: 6px; animation: shimmer 1.6s ease-in-out infinite; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+.animate-rise { animation: rise 0.5s var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Plain tables across the app: roomier rows and a soft hover so the eye can follow a line. */
+main tbody tr { transition: background-color 0.15s var(--ease); }
+@media (hover: hover) { main tbody tr:hover { background: var(--hover); } }
